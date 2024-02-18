@@ -11,7 +11,11 @@ import SwiftUI
 struct Rick_MortyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let mortyAPIProvider =  MortyAPIService()
+            let viewModel = CharacterListViewModel(apiProvider:mortyAPIProvider)
+            NavigationView {
+                CharacterListView(viewModel: viewModel)
+            }
         }
     }
 }
