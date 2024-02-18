@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 
 struct CharacterListView: View {
     
@@ -16,6 +16,7 @@ struct CharacterListView: View {
         self.viewModel = viewModel
     }
     
+    
     var body: some View {
         
         VStack {
@@ -23,12 +24,10 @@ struct CharacterListView: View {
                 List(viewModel.characters, id: \.self) { character in
                     let characterDetailsViewModel = viewModel.detailViewModel(character: character)
                     NavigationLink(destination: CharactersDetailsView(viewModel: characterDetailsViewModel)) {
-                        Text(character.name)
+                        CharacterCell(viewModel: viewModel.characterCellViewModel(character: character))
                             .padding()
                     }
                 }
-                //                    }
-                //                }
             } else {
                 Text("Brak postaci")
             }
@@ -45,6 +44,3 @@ struct CharacterListView: View {
     }
 }
 
-//#Preview {
-//    CharacterListView()
-//}

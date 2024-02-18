@@ -6,18 +6,23 @@
 //
 
 import Foundation
+typealias EpisodeUrl = String
 
 class ListEpisodeViewModel: ObservableObject {
-    @Published var episodes: [Episode]
-    
-    init(episodes: [Episode]) {
-        self.episodes = episodes
+    private let apiProvider: MortyAPIService
+    @Published var episodeUrls: [EpisodeUrl]
+    var headerTitle:String {
+        "Lista odcinków:"
     }
-    
-    func episodeDetailsViewModel(episode: Episode) -> EpisodeDetailsViewModel {
-        EpisodeDetailsViewModel(episode: episode)
+    init(episodeUrls: [EpisodeUrl], apiProvider: MortyAPIService) {
+        self.episodeUrls = episodeUrls
+        self.apiProvider = apiProvider
     }
-    func episodeCellViewModel(episode: Episode) -> EpisodeCellViewModel {
-        EpisodeCellViewModel(episode: episode)
+    @MainActor
+    func episodeDetailsViewModel(episodeUrl: EpisodeUrl) -> EpisodeDetailsViewModel {
+        EpisodeDetailsViewModel(episodeUrl: episodeUrl, apiProvider: apiProvider)
+    }
+    func episodeCellViewModel(episodeUrl: EpisodeUrl) -> EpisodeCellViewModel {
+        EpisodeCellViewModel(episodeUrl: episodeUrl)
     }
 }

@@ -8,16 +8,15 @@
 import Foundation
 
 class CharactersDetailsViewModel: ObservableObject, Identifiable {
+    private let apiProvider: MortyAPIService
+    private let character: Character
     @Published private(set) var alertDetails = AlertDetails()
     @Published var showAlert: Bool = false
     @MainActor @Published private(set) var episodes: [Episode] = []
-    private let character: Character
+    
     var episodesNames: [String] {
         character.episode
     }
-    
-    private let apiProvider: MortyAPIService
-    
     var characterName: String {
         character.name
     }
@@ -27,30 +26,28 @@ class CharactersDetailsViewModel: ObservableObject, Identifiable {
     }
     var  characterGender: String
     {
-        character.gender
+        "Gender: \(character.gender)"
     }
+    var  characterOrigin: String
+    {
+        "Origin: \(character.origin.name)"
+    }
+    var characterLocation: String
+    {
+        "Location: \(character.location.name)"
+    }
+    var characterStatus: String
+    {
+        "Status: \(character.status)"
+    }
+    
     init(character: Character, apiProvider:MortyAPIService) {
         self.character = character
         self.apiProvider = apiProvider
     }
-
-    @MainActor func listEpisodeViewModel() -> ListEpisodeViewModel {
-        ListEpisodeViewModel(episodes: episodes)
-    }
     
-    @MainActor
-    func onViewAppeared() {
-        Task {
-            do {
-                self.episodes = try await apiProvider.getEpisodes()
-                print("Jesteśmy w ViewModelu")
-            } catch URLError.unsupportedURL {
-                print("url error")
-                showAlert(title: "Error", description: "Wrong URL addres.", buttonText: "OK")
-            } catch {
-                print("Unknown error:\(error)")
-            }
-        }
+    @MainActor func listEpisodeViewModel() -> ListEpisodeViewModel {
+        ListEpisodeViewModel(episodeUrls: character.episode, apiProvider: apiProvider)
     }
 }
 

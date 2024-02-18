@@ -12,9 +12,9 @@ struct Rick_MortyApp: App {
     var body: some Scene {
         WindowGroup {
             let mortyAPIProvider =  MortyAPIService()
-            let viewModel = CharacterListViewModel(apiProvider:mortyAPIProvider)
+            let viewModel = WelcomeScreenViewModel(apiProvider: mortyAPIProvider)
             NavigationView {
-                CharacterListView(viewModel: viewModel)
+                WelcomeScreen(viewModel: viewModel)
             }
         }
     }

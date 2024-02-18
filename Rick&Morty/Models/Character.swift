@@ -10,10 +10,20 @@ import Foundation
 struct Character: Decodable, Hashable, Identifiable {
     let id: Int
     let name: String
+    let status: String
     let gender: String
+    let location: Location
+    let origin: Origin
+    let episode: [EpisodeUrl]
     let image: String
-    let episode: [String]
 }
-
+struct Location: Decodable, Hashable {
+    let name:String
+    let url:String
+}
+struct Origin: Decodable, Hashable  {
+    let name:String
+    let url:String
+}
 
 

@@ -8,13 +8,19 @@
 import Foundation
 
 class EpisodeCellViewModel: ObservableObject {
-    private let episode: Episode
+    private let episodeUrl: EpisodeUrl
     
     var episodeName: String {
-        return "Odcinek \(episode)"
+        let components = episodeUrl.components(separatedBy: "/")
+        if let episodeNumberString = components.last,
+           let episodeNumber = Int(episodeNumberString) {
+            return "Odcinek \(episodeNumber)"
+        } else {
+            return "Unknown Episode"
+        }
     }
     
-    init(episode: Episode) {
-        self.episode = episode
+    init(episodeUrl: EpisodeUrl) {
+        self.episodeUrl = episodeUrl
     }
 }

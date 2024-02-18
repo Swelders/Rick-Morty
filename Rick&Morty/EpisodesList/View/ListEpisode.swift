@@ -10,16 +10,20 @@ import SwiftUI
 struct ListEpisode: View {
     @ObservedObject var viewModel: ListEpisodeViewModel
     var body: some View {
-        HStack{
-            List(viewModel.episodes, id: \.self) { episode in
-                NavigationLink(destination: EpisodeDetailsView(viewModel: viewModel.episodeDetailsViewModel(episode: episode))) {
-                    EpisodeCellView(viewModel: viewModel.episodeCellViewModel(episode: episode))
+        Text(viewModel.headerTitle)
+            .font(.title)
+        VStack {
+            ForEach(viewModel.episodeUrls, id: \.self) { episodeUrl in
+                Divider()
+                    .frame(height: 2)
+                NavigationLink(destination: EpisodeDetailsView(viewModel: viewModel.episodeDetailsViewModel(episodeUrl: episodeUrl))) {
+                    EpisodeCellView(viewModel: viewModel.episodeCellViewModel(episodeUrl: episodeUrl))
                         .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    
                 }
             }
-            .listStyle(PlainListStyle())
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color(.brown).opacity(0.1))
         }
+        .foregroundColor(.black)
     }
 }

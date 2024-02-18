@@ -36,9 +36,7 @@ class CharacterListViewModel: ObservableObject {
         Task {
             do {
                 self.characters = try await apiProvider.getCharacters()
-                print("Jesteśmy w ViewModelu")
             } catch URLError.unsupportedURL {
-                print("url error")
                 showAlert(title: "Error", description: "Wrong URL addres.", buttonText: "OK")
             } catch {
                 print("Unknown error:\(error)")
@@ -47,6 +45,9 @@ class CharacterListViewModel: ObservableObject {
     }
     func detailViewModel(character: Character) -> CharactersDetailsViewModel {
         CharactersDetailsViewModel(character: character, apiProvider: apiProvider)
+    }
+    func characterCellViewModel(character: Character) -> CharacterCellViewModel {
+        CharacterCellViewModel(character: character)
     }
 }
 

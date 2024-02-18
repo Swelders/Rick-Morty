@@ -21,44 +21,52 @@ struct CharactersDetailsView: View {
             .bold()
             .padding(.vertical, 30)
     }
-    @ViewBuilder private var status: some View {
-        Text("Alive")
-    }
+    
     @ViewBuilder private var image: some View {
         if let imageURL = URL(string: viewModel.characterImage) {
             WebImage(url: imageURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .shadow(radius: 10)
+                .cornerRadius(10)
         } else {
             Text("Invalid image URL")
         }
+    }
+    @ViewBuilder private var status: some View {
+        Text(viewModel.characterStatus)
     }
     @ViewBuilder private var gender: some View {
         Text(viewModel.characterGender)
     }
     @ViewBuilder private var origin: some View {
-        Text("origin")
+        Text(viewModel.characterOrigin)
     }
     @ViewBuilder private var location: some View {
-        Text("location")
+        Text(viewModel.characterLocation)
     }
     var body: some View {
         ZStack{
-            VStack{
-                image
-                header
-                status
-                gender
-                origin
-                location
-                ListEpisode(viewModel: viewModel.listEpisodeViewModel())
+            ScrollView {
+                VStack{
+                    image
+                    header
+                    VStack(alignment: .leading) {
+                        Divider()
+                            .frame(height: 3)
+                        status
+                        gender
+                        origin
+                        location
+                    }.padding(5)
+                        .font(.title2)
+                    Divider()
+                        .frame(height: 3)
+                    ListEpisode(viewModel: viewModel.listEpisodeViewModel())
+                }.padding()
             }
-        }        .onAppear() {
-            viewModel.onViewAppeared()
+            .background(Color.gray.opacity(0.3))
         }
     }
 }
-//#Preview {
-//    CharactersDetailsView()
-//}
+
