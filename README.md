@@ -14,8 +14,4 @@ To fetch remote images, I used Swift Package Manager with SDWebImage for SwiftUI
 - I utilized the popular push/pop method for presenting views.
 - I successfully implemented dependency injection.
 
-## Comments
-Given time constraints, accomplishing every point was quite challenging. I focused on demonstrating most of the fundamental methods in developing the app.
-If I had more time, I would make the following changes to the project:
-- Introduce character paging. (Currently, we fetch only one page)
-- Add the ability to mark characters as favorites and highlight them in the characters list.
+
